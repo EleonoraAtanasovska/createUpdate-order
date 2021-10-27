@@ -1,0 +1,15 @@
+.dotted{
+  outline-style: dotted;
+  padding: 20px;
+}
+p.unos{
+  text-align: center;
+}
+
+.button1{
+  text-align: center;
+}
+
+input.ng-invalid.ng-touched{
+  border: 1px solid red;
+}

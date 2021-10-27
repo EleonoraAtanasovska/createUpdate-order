@@ -1,0 +1,15 @@
+
+.dotted{
+  outline-style: dotted;
+  padding: 20px;
+}
+p.unos{
+  text-align: center;
+}
+
+.button1{
+  text-align: center;
+}
+
+
+.selected{background-color: #B0BED9;}

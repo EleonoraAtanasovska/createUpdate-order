@@ -1,0 +1,132 @@
+<br> <br>
+<div class="container">
+  <form [formGroup] = "formaNarudjbenice" >
+  <div class="row">
+    <div class="col-md-4">
+      <label for="idNarudjbenice">IDNarudjbenice :</label>
+    </div>
+    <div class="col-md-4">
+      <label for="datumKreiranja">Datum kreiranja :</label>
+    </div>
+    <div class="col-md-4">
+      <label for="napomena">Napomena :</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <input type="string" id="idNarudjbenice" name="idNarudjbenice" formControlName="idNarudjbenice">
+       <button class="btn btn-info" (click)= "onPronadji(formaNarudjbenice)" [routerLink]= "['/izmena', this.formaNarudjbenice.value.idNarudjbenice]">Pronadji</button>
+    </div>
+
+    <div class="col-md-4">
+      <input type="date" id="datumKreiranja" name="datumKreiranja" formControlName="datumKreiranja">
+    </div>
+    <div class="col-md-4">
+      <input type="string" id="napomena" name="napomena" formControlName="napomena">
+    </div>
+  </div>
+  <br> <br>
+  <p class="unos">Unos stavki</p>
+  <div class="dotted" formArrayName= "stavke">
+    <table class="table table-hover" >
+      <thead>
+      <tr>
+        <th>IDStavke</th>
+        <th>NazivProizvoda</th>
+        <th>JedinicaMere</th>
+        <th>Cena</th>
+        <th>Kolicina</th>
+        <th>Napomena</th>
+      </tr>
+    </thead>
+    <tbody *ngFor = "let stavka of stavkeNarudjbenice; let i=index" (click)="onRowSelected(stavka, i)" [ngClass]="{selected: this.izabraniIndex === i}">
+      <tr>
+        <td>{{stavka.idStavke}}</td>
+        <td>{{stavka.proizvod.nazivProizvoda}}</td>
+        <td>{{stavka.proizvod.jedinicaMere}}</td>
+        <td>{{stavka.proizvod.cena}}</td>
+        <td>{{stavka.kolicina}}</td>
+        <td>{{stavka.napomenaStavke}}</td>
+      </tr>
+    </tbody>
+    </table>
+      <label for="idStavke">IDStavke :</label>
+      <br>
+      <div *ngFor="let stavkeCtrl of controls; let i= index" [formGroupName]="i">
+        <input type="string" id="idStavke" name="idStavke"  formControlName="idStavke">
+      </div>
+      <br><br>
+      <button><a [routerLink]="['/proizvod1', this.idNarudjbenice]">Izbor proizvod</a></button>
+      <br><br>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="nazivProizvoda">Naziv proizvoda :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="jedinicaMere">Jedinica mere :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="cena">Cena :</label>
+        </div>
+      </div>
+      <div class="row" *ngFor="let stavkeCtrl of controls; let i= index" [formGroupName]="i">
+        <div class="col-md-4" >
+          <input type="string" id="nazivProizvoda" name="nazivProizvoda"  formControlName="nazivProizvoda">
+        </div>
+        <div class="col-md-4">
+          <input type="string" id="jedinicaMere" name="jedinicaMere"  formControlName="jedinicaMere" >
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="cena" name="cena" formControlName="cena">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="kolicina">Kolicina :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="napomena">Napomena :</label>
+        </div>
+      </div>
+      <div class="row"  *ngFor="let stavkeCtrl of controls; let i= index" [formGroupName]="i">
+        <div class="col-md-4">
+          <input type="number" id="kolicina" name="kolicina" formControlName = "kolicina">
+        </div>
+        <div class="col-md-4">
+          <input type="string" id="napomena" name="napomena" formControlName="napomenaStavke">
+      </div>
+      </div>
+      <br><br>
+      <button class="btn btn-default" *ngFor="let stavkeCtrl of controls; let i= index"
+      (click) = "onUbaciStavku(i,
+       nazivProizvoda,
+      jedinicaMere,
+      cena,
+      this.formaNarudjbenice.controls.stavke.value[i].kolicina,
+      this.formaNarudjbenice.controls.stavke.value[i].napomenaStavke)">Ubaci stavku</button>
+      <button class="btn btn-default"  *ngFor="let stavkeCtrl of controls; let i= index"
+      (click) ="onIzmeniStavku(i, idStavke,
+      nazivProizvoda,
+      jedinicaMere,
+      cena,
+      this.formaNarudjbenice.controls.stavke.value[i].kolicina,
+      this.formaNarudjbenice.controls.stavke.value[i].napomenaStavke)">Izmeni stavku</button>
+      <button class="btn btn-default"  *ngFor="let stavkeCtrl of controls; let i= index"
+      (click)="onIzbrisiStavku(this.formaNarudjbenice.controls.stavke.value[i].idStavke)">Izbrisi stavku</button>
+  </div>
+  <br>
+    <div class="row">
+      <div class="col-md-4">
+        <button class="btn btn-success" (click)="onPotvrdi()" routerLink="/izmena">Potvrdi</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-danger" (click)="onObrisi(this.idNarudjbenice)" routerLink="/izmena">Obrisi</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-warning"(click)="onOdustani()" routerLink="/izmena">Odustani</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+

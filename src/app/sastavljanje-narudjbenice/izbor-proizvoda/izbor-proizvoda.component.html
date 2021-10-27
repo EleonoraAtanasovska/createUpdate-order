@@ -1,0 +1,47 @@
+
+<br><br>
+<div class="container">
+  <form (submit)="onPronadji(formaPronadji)" #formaPronadji="ngForm">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="nazivProizvoda" class="form-control">Naziv proizvoda</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <input
+        type="string"
+        id="nazivProizvoda"
+        class="form-control"
+        name="nazivProizvoda"
+        ngModel
+        >
+      </div>
+      <div class="col-md-3">
+        <button type="button"
+        class="btn btn-danger"
+        type="submit">Pronadji</button>
+      </div>
+    </div>
+  </form>
+  <hr>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Naziv Proizvoda </th>
+      <th>Jedinica Mere</th>
+      <th>Cena</th>
+    </tr>
+  </thead>
+  <tbody *ngFor = "let proizvod of proizvode | searchfilter : nazivProizvoda  let i =index" (click)="onRowSelected(proizvod, i, proizvod.nazivProizvoda)" [ngClass]="{selected: izabraniIndex === i}"  >
+     <tr>
+      <td>{{proizvod.nazivProizvoda}}</td>
+      <td>{{proizvod.jedinicaMere}}</td>
+      <td>{{proizvod.cena}}</td>
+    </tr>
+  </tbody>
+  <a type="button" class="btn btn-success"  [routerLink]="[this.navigation , this.id]">Potvrdi</a>
+  <a type="button" class="btn btn-danger">Odustani</a>
+</table>
+</div>
+

@@ -1,0 +1,116 @@
+<br> <br>
+<div class="container">
+  <form [formGroup] = "formaNarudjbenice">
+  <div class="row">
+    <div class="col-md-4">
+      <label for="idNarudjbenice">IDNarudjbenice :</label>
+    </div>
+    <div class="col-md-4">
+      <label for="datumKreiranja">Datum kreiranja :</label>
+    </div>
+    <div class="col-md-4">
+      <label for="napomena">Napomena :</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <input type="string" id="idNarudjbenice" name="idNarudjbenice" formControlName="idNarudjbenice" (keyup) = "saveValueIdNar()" >
+    </div>
+    <div class="col-md-4">
+      <input type="date" id="datumKreiranja" name="datumKreiranja" formControlName="datumKreiranja" (change)= "saveValueDatum()">
+    </div>
+    <div class="col-md-4">
+      <input type="string" id="napomena" name="napomena" formControlName="napomena" (keyup) = "saveValueNapomena()">
+    </div>
+  </div>
+  <br> <br>
+  <p class="unos">Unos stavki</p>
+  <div class="dotted" formArrayName= "stavke" >
+      <label for="idStavke">IDStavke :</label>
+      <br>
+      <div class="row" *ngFor="let stavkeCtrl of controls; let i= index" [formGroupName]="i">
+      <input type="string" id="idStavke" name="idStavke" formControlName="idStavke">
+    </div>
+      <br><br>
+      <button><a routerLink="/proizvod">Izbor proizvod</a></button>
+      <br><br>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="nazivProizvoda">Naziv proizvoda :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="jedinicaMere">Jedinica mere :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="cena">Cena :</label>
+        </div>
+      </div>
+      <div class="row" *ngFor="let stavkeCtrl of controls; let i= index" [formGroupName]="i">
+        <div class="col-md-4">
+          <input type="string" id="nazivProizvoda" name="nazivProizvoda"  formControlName="nazivProizvoda" >
+        </div>
+        <div class="col-md-4">
+          <input type="string" id="jedinicaMere" name="jedinicaMere"  formControlName="jedinicaMere">
+        </div>
+        <div class="col-md-4">
+          <input type="number" id="cena" name="cena"  formControlName="cena">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="kolicina">Kolicina :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="napomena">Napomena :</label>
+        </div>
+      </div>
+      <div class="row" *ngFor="let stavkeCtrl of controls; let i= index" [formGroupName]="i">
+        <div class="col-md-4">
+          <input type="number" id="kolicina" name="kolicina" formControlName="kolicina">
+        </div>
+        <div class="col-md-4">
+          <input type="string" id="napomenaStavke" name="napomenaStavke" formControlName="napomenaStavke" >
+      </div>
+
+      </div>
+      <br><br>
+      <button class="btn btn-default"  *ngFor="let stavkeCtrl of controls; let i= index" [disabled]="!stavke.valid" (click)="onUnesiStavku(i)">Unesi stavku</button>
+
+  </div>
+  <br>
+    <p>Unete stavke:</p>
+
+    <table class="table table-hover" >
+      <thead>
+      <tr>
+        <th>IDStavke</th>
+        <th>NazivProizvoda</th>
+        <th>JedinicaMere</th>
+        <th>Cena</th>
+        <th>Kolicina</th>
+        <th>Napomena</th>
+      </tr>
+    </thead>
+    <tbody  *ngFor="let stavka of sacuvanaStavka ; let i =index">
+      <tr>
+        <td>{{stavka.idStavke}}</td>
+        <td>{{stavka.proizvod.nazivProizvoda}}</td>
+        <td>{{stavka.proizvod.jedinicaMere}}</td>
+        <td>{{stavka.proizvod.cena}}</td>
+        <td>{{stavka.kolicina}}</td>
+        <td>{{stavka.napomenaStavke}}</td>
+      </tr>
+    </tbody>
+    </table>
+
+    <div class="row">
+      <div class="col-md-4">
+        <button type = "submit" class="btn btn-success" [disabled]="!formaNarudjbenice.valid" (click)="onPotvrdi()">Potvrdi</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-danger" (click)="onOdustani()" routerLink="/sastavljanje">Odustani</button>
+      </div>
+    </div>
+  </form>
+</div>
+
